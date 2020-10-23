@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 
 namespace TicTacToe.Models
 {
-    public class DELETEME
+   public enum CellValues
     {
+        X,
+        O,
+        Empty
     }
 }

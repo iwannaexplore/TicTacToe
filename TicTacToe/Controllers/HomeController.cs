@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using TicTacToe.Models;
+using TicTacToe.Models.ViewModels;
 
 namespace TicTacToe.Controllers
 {
@@ -12,11 +14,26 @@ namespace TicTacToe.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public ActionResult Index()
         {
-            return View();
+            //TempData["Board"] = new Board();
+            return View(new BoardViewModel(new Board()));
         }
 
+        [HttpPost]
+        public ActionResult Index(int id)
+        {
+            Board gameboard;
+            if (TempData.ContainsKey("Board"))
+            {
+                gameboard = (Board)TempData["Board"];
+            }
+            else
+            {
+                gameboard = new Board();
+            }
 
+            return View(new BoardViewModel(gameboard));
+        }
     }
 }

@@ -1,4 +1,9 @@
-﻿<header >
+﻿@model TicTacToe.Models.ViewModels.BoardViewModel
+
+@*@{
+    TempData["Board"] = Model.Board;
+}*@
+<header >
     <div class="header-container">
         <h1>
             Tic Tac Toe
@@ -18,32 +23,18 @@
 </div>
 <div class="main">
     <div class="flex-container">
-        <div class="flex-cell">
-            <button class="flex-item">1</button>
-        </div>
-        <div class="flex-cell">
-            <button class="flex-item">2</button>
-        </div>
-        <div class="flex-cell">
-            <button class="flex-item">3</button>
-        </div>
-        <div class="flex-cell">
-            <button class="flex-item">4</button>
-        </div>
-        <div class="flex-cell">
-            <button class="flex-item">5</button>
-        </div>
-        <div class="flex-cell">
-            <button class="flex-item">6</button>
-        </div>
-        <div class="flex-cell">
-            <button class="flex-item">7</button>
-        </div>
-        <div class="flex-cell">
-            <button class="flex-item">8</button>
-        </div>
-        <div class="flex-cell">
-            <button class="flex-item">9</button>
-        </div>
+        <form asp-controller="Home" asp-action="Index" method="post">
+            @foreach (var cell in Model.Board.Cells)
+            {
+                <div class="flex-cell">
+                    <button class="flex-item" value="@cell.Id" >
+                        @if (cell.Value != CellValues.Empty)
+                        {
+                            @cell.Value
+                        }
+                    </button>
+                </div>
+            }
+        </form>
     </div>
 </div>
