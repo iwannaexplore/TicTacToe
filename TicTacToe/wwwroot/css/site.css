@@ -3,7 +3,6 @@
 *, *:before, *:after { box-sizing: border-box; }
 
 
-
 .header-container {
     background-color: darkturquoise;
     padding: 15px;
@@ -74,4 +73,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.form {
+    display: block;
+    width: 100%;
 }

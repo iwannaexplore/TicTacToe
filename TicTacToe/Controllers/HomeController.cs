@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TicTacToe.Models;
 using TicTacToe.Models.ViewModels;
@@ -16,24 +17,30 @@ namespace TicTacToe.Controllers
 
         public ActionResult Index()
         {
-            //TempData["Board"] = new Board();
-            return View(new BoardViewModel(new Board()));
-        }
-
-        [HttpPost]
-        public ActionResult Index(int id)
-        {
-            Board gameboard;
+            Board board;
             if (TempData.ContainsKey("Board"))
             {
-                gameboard = (Board)TempData["Board"];
+                board = JsonSerializer.Deserialize<Board>((string) TempData["Board"]);
             }
             else
             {
-                gameboard = new Board();
+                board = new Board();
             }
 
-            return View(new BoardViewModel(gameboard));
+            return View(new BoardViewModel(board));
         }
+
+        [HttpPost]
+        public ActionResult MakeAStep(int btn)
+        {
+            Board board = JsonSerializer.Deserialize<Board>((string) TempData["Board"]);
+            string nextTurn = (string) TempData["NextTUrn"];
+
+
+
+            return View("Index", new BoardViewModel(board));
+        }
+
+        
     }
 }

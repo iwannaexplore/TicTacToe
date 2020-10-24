@@ -1,8 +1,10 @@
-﻿@model TicTacToe.Models.ViewModels.BoardViewModel
+﻿@using System.Text.Json
+@model TicTacToe.Models.ViewModels.BoardViewModel
 
-@*@{
-    TempData["Board"] = Model.Board;
-}*@
+@{
+    TempData["Board"] = JsonSerializer.Serialize(Model.Board);
+    TempData["NextTurn"] = Model.NextTurn;
+}
 <header >
     <div class="header-container">
         <h1>
@@ -22,19 +24,17 @@
     <a class="anchor" href="">New Game</a>
 </div>
 <div class="main">
-    <div class="flex-container">
-        <form asp-controller="Home" asp-action="Index" method="post">
-            @foreach (var cell in Model.Board.Cells)
-            {
-                <div class="flex-cell">
-                    <button class="flex-item" value="@cell.Id" >
-                        @if (cell.Value != CellValues.Empty)
-                        {
-                            @cell.Value
-                        }
-                    </button>
-                </div>
-            }
-        </form>
-    </div>
+    <form class="flex-container" asp-controller="Home" asp-action="MakeAStep" method="post">
+        @foreach (var cell in Model.Board.Cells)
+        {
+            <div class="flex-cell">
+                <button class="flex-item" asp-route-btn="@cell.Id">
+                    @if (cell.Value != CellValues.Empty)
+                    {
+                        @cell.Value
+                    }
+                </button>
+            </div>
+        }
+    </form>
 </div>
