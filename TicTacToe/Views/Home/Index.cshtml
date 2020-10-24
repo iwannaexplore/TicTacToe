@@ -1,11 +1,11 @@
-﻿@using System.Text.Json
+﻿@using Newtonsoft.Json;
 @model TicTacToe.Models.ViewModels.BoardViewModel
 
-@{
-    TempData["Board"] = JsonSerializer.Serialize(Model.Board);
+@*@{
+    TempData["Board"] = JsonConvert.SerializeObject(Model.Board);
     TempData["NextTurn"] = Model.NextTurn;
-}
-<header >
+}*@
+<header>
     <div class="header-container">
         <h1>
             Tic Tac Toe
@@ -13,7 +13,7 @@
     </div>
 
 </header>
-<div >
+<div>
     <div class="result-container">
         <h2>
             It's tie

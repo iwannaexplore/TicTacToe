@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+﻿using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TicTacToe.Models;
@@ -20,7 +20,7 @@ namespace TicTacToe.Controllers
             Board board;
             if (TempData.ContainsKey("Board"))
             {
-                board = JsonSerializer.Deserialize<Board>((string) TempData["Board"]);
+                board = JsonConvert.DeserializeObject<Board>((string) TempData["Board"]);
             }
             else
             {
@@ -30,11 +30,11 @@ namespace TicTacToe.Controllers
             return View(new BoardViewModel(board));
         }
 
-        [HttpPost]
+        
         public ActionResult MakeAStep(int btn)
         {
-            Board board = JsonSerializer.Deserialize<Board>((string) TempData["Board"]);
-            string nextTurn = (string) TempData["NextTUrn"];
+            Board board = JsonConvert.DeserializeObject<Board>((string) TempData["Board"]);
+            CellValues nextTurn = (CellValues) TempData["NextTurn"];
 
 
 
