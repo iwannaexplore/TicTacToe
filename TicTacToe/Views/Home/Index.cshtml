@@ -1,39 +1,46 @@
 ﻿@using Newtonsoft.Json;
 @model TicTacToe.Models.ViewModels.BoardViewModel
-
-@*@{
+@*pass value from View To HomeController*@
+@{
+    //We can't pass objects, so we convert object to JSON
     TempData["Board"] = JsonConvert.SerializeObject(Model.Board);
     TempData["NextTurn"] = Model.NextTurn;
-}*@
+}
 <header>
-    <div class="header-container">
+    <div class="container">
         <h1>
             Tic Tac Toe
         </h1>
     </div>
 
 </header>
-<div>
-    <div class="result-container">
-        <h2>
-            It's tie
-        </h2>
-    </div>
-</div>
-<div class="anchor-container">
-    <a class="anchor" href="">New Game</a>
-</div>
+@*//Here we draw html messages like "O wins" or "X wins!"*@
+@Html.Raw(Model.StepResult)
+
 <div class="main">
-    <form class="flex-container" asp-controller="Home" asp-action="MakeAStep" method="post">
+    <form class="flex-container" asp-controller="Home" asp-action="MakeMove" method="post">
+        @* draw each cell here *@
         @foreach (var cell in Model.Board.Cells)
         {
             <div class="flex-cell">
-                <button class="flex-item" asp-route-btn="@cell.Id">
-                    @if (cell.Value != CellValues.Empty)
+                @* if button was clicked his value will be not == empty. So, we draw button and make it disabled *@
+                @if (cell.Value != CellValues.Empty)
+                {
+                    <button class="flex-item" name="btnId" value="@cell.Id" disabled="disabled">@cell.Value</button>
+                }
+                else
+                {
+                    //if game end - we disable all buttons
+                    if (Model.NextTurn == CellValues.Empty)
                     {
-                        @cell.Value
+                        <button class="flex-item" name="btnId" value="@cell.Id" disabled="disabled"></button>
                     }
-                </button>
+                    //if game doesn't end - we write button without text inside
+                    else
+                    {
+                        <button class="flex-item" name="btnId" value="@cell.Id"></button>
+                    }
+                }
             </div>
         }
     </form>

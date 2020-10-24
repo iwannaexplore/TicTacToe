@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-
-namespace TicTacToe.Models.ViewModels
+﻿namespace TicTacToe.Models.ViewModels
 {
     public class BoardViewModel
     {
@@ -9,10 +6,21 @@ namespace TicTacToe.Models.ViewModels
 
         public CellValues NextTurn { get; set; }
 
-        public BoardViewModel(Board board)
+        public string StepResult { get; set; }
+
+        public BoardViewModel() { }
+        public BoardViewModel(Board board, CellValues nextTurn)
         {
-            Board = new Board();
-            NextTurn = CellValues.O;
+            Board = board;
+            NextTurn = nextTurn;
+            StepResult = $"<div class=\"container\"><h2>{nextTurn} turn!</h2></div>";
+        }
+
+        public BoardViewModel(Board board, CellValues nextTurn, string result)
+        {
+            Board = board;
+            NextTurn = nextTurn;
+            StepResult = result;
         }
     }
 }
